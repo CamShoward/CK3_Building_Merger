@@ -15,7 +15,7 @@ Newtonsoft.Json library for JSON handling
 Clone the repository:
 sh
 Copy code
-git clone https://github.com/yourusername/CK3_Building_Merger.git
+git clone https://github.com/CamShoward/CK3_Building_Merger.git
 Open the solution file CK3_Building_Merger.sln in Visual Studio.
 Restore the NuGet packages to ensure all dependencies are installed.
 Build the solution.
