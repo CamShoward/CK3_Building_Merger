@@ -1,6 +1,6 @@
 ﻿namespace CK3_Building_Merger
 {
-    partial class Form1
+    partial class CK3_Building_Merger
     {
         /// <summary>
         ///  Required designer variable.
@@ -140,7 +140,7 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
-            // Form1
+            // CK3_Building_Merger
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -156,7 +156,7 @@
             Controls.Add(textBox1);
             Controls.Add(btnBrowse);
             Controls.Add(btnSubmit);
-            Name = "Form1";
+            Name = "CK3_Building_Merger";
             Text = "CK3 Buidling Merger";
             ResumeLayout(false);
             PerformLayout();

@@ -8,21 +8,21 @@ using System.Collections.Generic;
 
 namespace CK3_Building_Merger
 {
-    public partial class Form1 : Form
+    public partial class CK3_Building_Merger : Form
     {
         private HashSet<string> castleHoldings = new HashSet<string>();
         private HashSet<string> tribalHoldings = new HashSet<string>();
         private HashSet<string> cityHoldings = new HashSet<string>();
         private HashSet<string> churchHoldings = new HashSet<string>();
 
-        public Form1()
+        public CK3_Building_Merger()
         {
             InitializeComponent();
         }
 
-        public static string Protoo(string fp, HashSet<string> castleHoldings, HashSet<string> tribalHoldings, HashSet<string> cityHoldings, HashSet<string> churchHoldings)
+        public static void Protoo(string fp, HashSet<string> castleHoldings, HashSet<string> tribalHoldings, HashSet<string> cityHoldings, HashSet<string> churchHoldings)
         {
-            string pc = " ";
+            
             if (Directory.Exists(fp))
             {
                 // Get all files in the directory
@@ -40,7 +40,7 @@ namespace CK3_Building_Merger
             {
                 Debug.WriteLine("Directory does not exist.");
             }
-            return pc;
+            
         }
 
         private static void ExtractBuildings(string content, string holdingType, HashSet<string> holdings)
@@ -177,54 +177,67 @@ namespace CK3_Building_Merger
 
         private void OutputHoldingsToFile(string modListName, string modPath, HashSet<string> castleHoldings, HashSet<string> tribalHoldings, HashSet<string> cityHoldings, HashSet<string> churchHoldings)
         {
-            string outputFolder = Path.Combine(modPath, modListName + "_buildings", "holdings");
+            string outputFolder = Path.Combine(modPath,"common\\" + "holdings");
             Directory.CreateDirectory(outputFolder);
-            string outputPath = Path.Combine(outputFolder, "holdings.txt");
+            string outputPath = Path.Combine(outputFolder, "~holdings.txt");
 
             using (StreamWriter writer = new StreamWriter(outputPath))
             {
-                writer.WriteLine("castle_holding = {");
-                writer.WriteLine("\tprimary_building = castle_01");
-                writer.WriteLine("\tbuildings = {");
-                foreach (string holding in castleHoldings)
+               
+                if (castleHoldings != null)
                 {
-                    writer.WriteLine($"\t\t{holding}");
+                    writer.WriteLine("castle_holding = {");
+                    writer.WriteLine("\tprimary_building = castle_01");
+                    writer.WriteLine("\tbuildings = {");
+                    foreach (string holding in castleHoldings)
+                    {
+                        writer.WriteLine($"\t\t{holding}");
+                    }
+                    writer.WriteLine("\t}");
+                    writer.WriteLine("}");
                 }
-                writer.WriteLine("\t}");
-                writer.WriteLine("}");
 
-                writer.WriteLine("\ntribal_holding = {");
-                writer.WriteLine("\tprimary_building = tribe_01");
-                writer.WriteLine("\tbuildings = {");
-                foreach (string holding in tribalHoldings)
+                if (tribalHoldings != null)
                 {
-                    writer.WriteLine($"\t\t{holding}");
+                    writer.WriteLine("\ntribal_holding = {");
+                    writer.WriteLine("\tprimary_building = tribe_01");
+                    writer.WriteLine("\tbuildings = {");
+                    foreach (string holding in tribalHoldings)
+                    {
+                        writer.WriteLine($"\t\t{holding}");
+                    }
+                    writer.WriteLine("\t}");
+                    writer.WriteLine("\tflag = tribal");
+                    writer.WriteLine("}");
                 }
-                writer.WriteLine("\t}");
-                writer.WriteLine("\tflag = tribal");
-                writer.WriteLine("}");
 
-                writer.WriteLine("\ncity_holding = {");
-                writer.WriteLine("\tprimary_building = city_01");
-                writer.WriteLine("\tbuildings = {");
-                foreach (string holding in cityHoldings)
+                if (cityHoldings != null)
                 {
-                    writer.WriteLine($"\t\t{holding}");
+                    writer.WriteLine("\ncity_holding = {");
+                    writer.WriteLine("\tprimary_building = city_01");
+                    writer.WriteLine("\tbuildings = {");
+                    foreach (string holding in cityHoldings)
+                    {
+                        writer.WriteLine($"\t\t{holding}");
+                    }
+                    writer.WriteLine("\t}");
+                    writer.WriteLine("\tcan_be_inherited = yes");
+                    writer.WriteLine("}");
                 }
-                writer.WriteLine("\t}");
-                writer.WriteLine("\tcan_be_inherited = yes");
-                writer.WriteLine("}");
 
-                writer.WriteLine("\nchurch_holding = {");
-                writer.WriteLine("\tprimary_building = temple_01");
-                writer.WriteLine("\tbuildings = {");
-                foreach (string holding in churchHoldings)
+                if (churchHoldings != null)
                 {
-                    writer.WriteLine($"\t\t{holding}");
+                    writer.WriteLine("\nchurch_holding = {");
+                    writer.WriteLine("\tprimary_building = temple_01");
+                    writer.WriteLine("\tbuildings = {");
+                    foreach (string holding in churchHoldings)
+                    {
+                        writer.WriteLine($"\t\t{holding}");
+                    }
+                    writer.WriteLine("\t}");
+                    writer.WriteLine("\tcan_be_inherited = yes");
+                    writer.WriteLine("}");
                 }
-                writer.WriteLine("\t}");
-                writer.WriteLine("\tcan_be_inherited = yes");
-                writer.WriteLine("}");
             }
 
             MessageBox.Show($"Holdings data has been written to {outputPath}");
@@ -256,23 +269,41 @@ public class parseJson
 
     public parseJson(string fp)
     {
-        filePath = fp; // Mod list file path. Known issue: system might deny access to certain folders. Potential fix: run as admin.
+        filePath = fp;
     }
 
     public List<mod> makeList()
     {
-        using StreamReader reader = new(filePath);
-        var json = reader.ReadToEnd();
-        var playset = Newtonsoft.Json.JsonConvert.DeserializeObject<playset>(json);
+        try
+        {
+            using StreamReader reader = new(filePath);
+            var json = reader.ReadToEnd();
 
-        if (playset != null)
-        {
-            Name = playset.name;
-            return playset.mods;
+            // Log the JSON content
+            Debug.WriteLine("JSON Content: " + json);
+
+            var playset = Newtonsoft.Json.JsonConvert.DeserializeObject<playset>(json);
+
+            if (playset != null)
+            {
+                Name = playset.name;
+                return playset.mods;
+            }
+            else
+            {
+                throw new Exception("Could not deserialize JSON file.");
+            }
         }
-        else
+        catch (Newtonsoft.Json.JsonReaderException jrex)
         {
-            throw new Exception("Could not find JSON file.");
+            Debug.WriteLine("JSON Reader Exception: " + jrex.Message);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("General Exception: " + ex.Message);
+            throw;
         }
     }
 }
+
