@@ -1,6 +1,6 @@
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using Newtonsoft;
-using System.Diagnostics; // Library for handling JSON files.
+using Newtonsoft; // Library for handling JSON files.
+using System.Diagnostics; 
 using System.Text.RegularExpressions; // Library for using regular expressions.
 using System.IO;
 using System.Windows.Forms;
@@ -173,18 +173,60 @@ namespace CK3_Building_Merger
 
             // Output the results to a new file
             OutputHoldingsToFile(modListData.Name, modPath, castleHoldings, tribalHoldings, cityHoldings, churchHoldings);
+            createDescripFile(modPath, modListData.Name);
+            createModFile(modPath, "buildingsList");
+        }
+
+
+        private void createModFile(string modPath, string modName)
+        {
+
+            // Add the additional line with the path
+            string modFolder = textBox3.Text;
+            //Directory.CreateDirectory(modFolder);
+
+            string modFilePath = Path.Combine(modFolder, modName + ".mod");
+
+            using (StreamWriter sw = new StreamWriter(modFilePath, true)) // 'true' to append to the file
+            {   
+                string buildingsFolderPath = modPath;
+                sw.WriteLine("version = \"1\"");
+                sw.WriteLine("tags ={");
+                sw.WriteLine("\t Utilities");
+                sw.WriteLine("}");
+                sw.WriteLine($"name= \"{modName}\"");
+                sw.WriteLine("supported_version= \"*\"");
+                sw.WriteLine($"path=\"mods\\buildingsList\"");
+            }
+        }
+
+        private void createDescripFile(string modPath, string modName)
+        {
+            string outputFolder = Path.Combine(modPath, "buildingsList");
+            Directory.CreateDirectory(outputFolder);
+
+            string outputPath = Path.Combine(outputFolder,"descriptor.mod");
+
+            using (StreamWriter sw = new StreamWriter(outputPath))
+            {
+                sw.WriteLine("version = \"1\"");
+                sw.WriteLine("tags ={");
+                sw.WriteLine("\t Utilities");
+                sw.WriteLine("}");
+                sw.WriteLine($"name= \"{modName}\"");
+                sw.WriteLine("supported_version= \"*\"");
+            }
         }
 
         private void OutputHoldingsToFile(string modListName, string modPath, HashSet<string> castleHoldings, HashSet<string> tribalHoldings, HashSet<string> cityHoldings, HashSet<string> churchHoldings)
         {
-            string outputFolder = Path.Combine(modPath,"common\\" + "holdings");
+            string outputFolder = Path.Combine(modPath,"buildingsList\\common\\holdings");
             Directory.CreateDirectory(outputFolder);
             string outputPath = Path.Combine(outputFolder, "~holdings.txt");
 
             using (StreamWriter writer = new StreamWriter(outputPath))
             {
-               
-                if (castleHoldings != null)
+                if (castleHoldings.Count > 0)
                 {
                     writer.WriteLine("castle_holding = {");
                     writer.WriteLine("\tprimary_building = castle_01");
@@ -197,7 +239,7 @@ namespace CK3_Building_Merger
                     writer.WriteLine("}");
                 }
 
-                if (tribalHoldings != null)
+                if (tribalHoldings.Count > 0)
                 {
                     writer.WriteLine("\ntribal_holding = {");
                     writer.WriteLine("\tprimary_building = tribe_01");
@@ -211,7 +253,7 @@ namespace CK3_Building_Merger
                     writer.WriteLine("}");
                 }
 
-                if (cityHoldings != null)
+                if (cityHoldings.Count > 0)
                 {
                     writer.WriteLine("\ncity_holding = {");
                     writer.WriteLine("\tprimary_building = city_01");
@@ -225,7 +267,7 @@ namespace CK3_Building_Merger
                     writer.WriteLine("}");
                 }
 
-                if (churchHoldings != null)
+                if (churchHoldings.Count > 0)
                 {
                     writer.WriteLine("\nchurch_holding = {");
                     writer.WriteLine("\tprimary_building = temple_01");
