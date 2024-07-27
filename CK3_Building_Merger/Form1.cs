@@ -196,7 +196,7 @@ namespace CK3_Building_Merger
                 sw.WriteLine("}");
                 sw.WriteLine($"name= \"{modName}\"");
                 sw.WriteLine("supported_version= \"*\"");
-                sw.WriteLine($"path=\"mods\\buildingsList\"");
+                sw.WriteLine($"path=\"mod\\buildingsList\"");
             }
         }
 
