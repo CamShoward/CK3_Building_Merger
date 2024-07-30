@@ -19,23 +19,23 @@ Simply download the .exe file and you're good to go. Have fun!
 Clone the repository:
 sh
 Copy code
-git clone https://github.com/CamShoward/CK3_Building_Merger.git
-Open the solution file CK3_Building_Merger.sln in Visual Studio.
-Restore the NuGet packages to ensure all dependencies are installed.
-Build the solution.
+git clone https://github.com/CamShoward/CK3_Building_Merger.git <br/>
+Open the solution file CK3_Building_Merger.sln in Visual Studio.<br/>
+Restore the NuGet packages to ensure all dependencies are installed.<br/>
+Build the solution.<br/>
 ## Usage
-Select Playset File:
-Click on the Browse button and select a JSON playset file.
-Select Steam Workshop Folder:
-Using the appropriate browse button navigate to the workshop folder for your Crusader Kings 3 installation. On my PC, its path is: "C:\Program Files (x86)\Steam\steamapps\workshop\content\1158310".
-Select CK3 Mod Folder:
-Click on the Select CK3 Mod Folder button and navigate to your CK3 mod folder. On my PC, its path is: "C:\Users\exUser\Documents\Paradox Interactive\Crusader Kings III\mod"
-Submit:
-Click on the Submit button to generate the consolidated holdings files.
-Clear:
-Click on the Clear button to clear all selected paths.
-Error Handling
-The application includes error detection to ensure the provided file paths exist. If an invalid path is detected, a message box will display the error, and the process will halt until the issue is resolved.
+Select Playset File:<br/>
+Click on the Browse button and select a JSON playset file.<br/>
+Select Steam Workshop Folder:<br/>
+Using the appropriate browse button navigate to the workshop folder for your Crusader Kings 3 installation. On my PC, its path is: "C:\Program Files (x86)\Steam\steamapps\workshop\content\1158310".<br/>
+Select CK3 Mod Folder:<br/>
+Click on the Select CK3 Mod Folder button and navigate to your CK3 mod folder. On my PC, its path is: "C:\Users\exUser\Documents\Paradox Interactive\Crusader Kings III\mod"<br/>
+Submit:<br/>
+Click on the Submit button to generate the consolidated holdings files.<br/>
+Clear:<br/>
+Click on the Clear button to clear all selected paths.<br/>
+Error Handling<br/>
+The application includes error detection to ensure the provided file paths exist. If an invalid path is detected, a message box will display the error, and the process will halt until the issue is resolved.<br/>
 
 # Example JSON Playset
 Ensure your JSON playset file matches the expected structure:
