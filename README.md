@@ -1,6 +1,30 @@
 # CK3 Building Merger
 ## Overview
-CK3 Building Merger is a Windows Forms application designed to help users merge building files from multiple Crusader Kings 3 (CK3) mods. This tool allows users to browse and select a JSON playset file, a Steam Workshop folder, and a CK3 mod folder and then generates a consolidated holdings file for the selected mods.
+
+
+---
+
+# CK3 Building Merger
+
+### Overview
+
+Modding **Crusader Kings 3** (CK3) often involves adding new buildings and holdings to enhance gameplay. However, when multiple mods add their own building slots or holding types, conflicts can arise. CK3 mods frequently modify the same game files, such as county data, leading to issues like buildings or holdings from one mod not appearing when used alongside others. This problem can cause instability, graphical glitches, or missing content, significantly affecting your gameplay experience.
+
+The **CK3 Building Merger** tool solves this by merging building-related data across mods, ensuring they work seamlessly together. It intelligently combines changes from multiple mods into a unified version, preventing conflicts and allowing you to enjoy all the added content without missing features.
+
+### Why This Tool Is Useful
+
+1. **Conflict Resolution**: Mod conflicts in CK3 can cause buildings and holdings to disappear or not load correctly. The Building Merger addresses this by merging overlapping files, reducing the likelihood of such issues.
+   
+2. **Time-Saving**: Instead of manually editing files or relying on patch mods, which may not always exist, this tool automates the process, saving time for modders and players alike.
+
+3. **Increased Mod Compatibility**: By merging building data from multiple mods, this tool increases compatibility, enabling you to use a wider variety of mods without worry.
+
+4. **Stable Gameplay**: Ensuring that all mods play nicely together results in fewer crashes and smoother gameplay, allowing you to focus on your empire-building.
+
+With the CK3 Building Merger, enjoy all the mods you want—without sacrificing stability or losing content.
+
+--- 
 
 ## Features
 Select JSON playset file.
